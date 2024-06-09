@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"syscall"
 	"time"
 
 	"github.com/malinoOS/malino/libmalino"
@@ -22,11 +20,8 @@ func main() {
 	}
 
 	// mount /dev
-	if err := os.Mkdir("/dev", 0777); err != nil {
-
-	}
-	if err := syscall.Mount("udev", "/dev", "devtmpfs", syscall.MS_NOSUID, ""); err != nil {
-		panic(err)
+	if err := libmalino.MountDevFS(); err != nil {
+		doomPanic(err, "mounting /dev")
 	}
 
 	// start fbdoom
